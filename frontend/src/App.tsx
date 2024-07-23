@@ -1,14 +1,13 @@
-import { Button, Container, Flex, TabNav, Text } from "@radix-ui/themes";
+import { Container } from "@radix-ui/themes";
+import Navbar from "./components/molecules/Navbar";
+import ProductList from "./components/organisms/ProductList";
+import AppRoutes from "./routes";
 
 function App() {
   return (
-    <Container>
-      <TabNav.Root>
-        <Flex direction="row" justify={"between"} p={"5"} gap="2">
-          <Text>Hello from Radix Themes :</Text>
-          <Button>Let's go</Button>
-        </Flex>
-      </TabNav.Root>
+    <Container pt={"4"}>
+      <Navbar />
+      <AppRoutes />
     </Container>
   );
 }
