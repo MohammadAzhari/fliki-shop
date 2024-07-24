@@ -54,6 +54,8 @@ const changeQuantityOfItem = atom(
               quantity:
                 data.type === "increment"
                   ? cartItem.quantity + 1
+                  : cartItem.quantity - 1 < 1
+                  ? 1
                   : cartItem.quantity - 1,
             }
           : cartItem
