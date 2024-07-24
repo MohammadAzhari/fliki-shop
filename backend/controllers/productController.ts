@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { listProducts } from "../services/productService";
 
 export const getProducts = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: NextFunction
 ): Promise<void> => {
   try {
     const page = parseInt(req.query.page as string, 10) || 1;
@@ -19,7 +20,18 @@ export const getProducts = async (
         total,
       },
     });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+  } catch (error) {
+    next(error);
   }
 };

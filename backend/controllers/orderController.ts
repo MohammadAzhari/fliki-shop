@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createOrder } from "../services/orderService";
 import Joi from "joi";
 
@@ -15,7 +15,11 @@ const orderSchema = Joi.object({
   totalAmount: Joi.number().positive().required(),
 });
 
-export const addOrder = async (req: Request, res: Response): Promise<void> => {
+export const addOrder = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { error } = orderSchema.validate(req.body);
     if (error) {
@@ -29,6 +33,6 @@ export const addOrder = async (req: Request, res: Response): Promise<void> => {
     const order = await createOrder(req.body);
     res.status(201).json(order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
