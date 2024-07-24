@@ -107,6 +107,6 @@ export const seedProducts = async () => {
   console.log("Existing data cleared...");
 
   // Insert seed data
-  await Product.insertMany(products);
+  await Product.insertMany(products).then(console.log);
   console.log("Seed data inserted...");
 };

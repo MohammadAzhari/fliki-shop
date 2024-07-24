@@ -7,8 +7,27 @@ import {
   Table,
   Text,
 } from "@radix-ui/themes";
+import { useAtom, useAtomValue } from "jotai";
+import cartAtom from "../../state/atoms/cartAtom";
+import cartActions from "../../state/actions/cartActions";
+import { IProduct } from "../../models/Product";
 
 const CartItems = () => {
+  const cartItems = useAtomValue(cartAtom);
+  const [, changeQuantityOfItem] = useAtom(cartActions.changeQuantityOfItem);
+  const [, removeItemFromCart] = useAtom(cartActions.removeItemFromCart);
+
+  const handleClickRemoveItemFromCart = (product: IProduct) => {
+    removeItemFromCart({ product: product });
+  };
+
+  const handleClickChangeQuantityOfItem = (
+    product: IProduct,
+    type: "increment" | "decrement"
+  ) => {
+    changeQuantityOfItem({ product: product, type: type });
+  };
+
   return (
     <Flex
       gap="3"
@@ -29,49 +48,70 @@ const CartItems = () => {
         </Table.Header>
 
         <Table.Body>
-          <Table.Row align="center">
-            <Table.RowHeaderCell>Danilo Sousa.</Table.RowHeaderCell>
-            <Table.Cell>220$</Table.Cell>
-            <Table.Cell>
-              <Flex align="center" gap={"2"}>
-                <IconButton variant="ghost" size="2">
-                  <MinusIcon />
-                </IconButton>
-                <Text>5</Text>
-                <IconButton variant="ghost" size="2">
-                  <PlusIcon />
-                </IconButton>
-              </Flex>
-            </Table.Cell>
-            <Table.Cell>
-              <AlertDialog.Root>
-                <AlertDialog.Trigger>
-                  <Button variant="outline" color="red" size="1">
-                    <TrashIcon />
-                  </Button>
-                </AlertDialog.Trigger>
-                <AlertDialog.Content maxWidth="450px">
-                  <AlertDialog.Title>Remove from cart</AlertDialog.Title>
-                  <AlertDialog.Description size="2">
-                    Are you sure do you want to remove this item from the cart?
-                  </AlertDialog.Description>
+          {cartItems.map((item) => (
+            <Table.Row key={item.product._id} align="center">
+              <Table.RowHeaderCell>{item.product.name}</Table.RowHeaderCell>
+              <Table.Cell>{item.product.price}$</Table.Cell>
+              <Table.Cell>
+                <Flex align="center" gap={"2"}>
+                  <IconButton
+                    onClick={() =>
+                      handleClickChangeQuantityOfItem(item.product, "decrement")
+                    }
+                    variant="ghost"
+                    size="2"
+                  >
+                    <MinusIcon />
+                  </IconButton>
+                  <Text>{item.quantity}</Text>
+                  <IconButton
+                    onClick={() =>
+                      handleClickChangeQuantityOfItem(item.product, "increment")
+                    }
+                    variant="ghost"
+                    size="2"
+                  >
+                    <PlusIcon />
+                  </IconButton>
+                </Flex>
+              </Table.Cell>
+              <Table.Cell>
+                <AlertDialog.Root>
+                  <AlertDialog.Trigger>
+                    <Button variant="outline" color="red" size="1">
+                      <TrashIcon />
+                    </Button>
+                  </AlertDialog.Trigger>
+                  <AlertDialog.Content maxWidth="450px">
+                    <AlertDialog.Title>Remove from cart</AlertDialog.Title>
+                    <AlertDialog.Description size="2">
+                      Are you sure do you want to remove this item from the
+                      cart?
+                    </AlertDialog.Description>
 
-                  <Flex gap="3" mt="4" justify="end">
-                    <AlertDialog.Cancel>
-                      <Button variant="soft" color="gray">
-                        Cancel
-                      </Button>
-                    </AlertDialog.Cancel>
-                    <AlertDialog.Action>
-                      <Button variant="solid" color="red">
-                        Revoke from cart
-                      </Button>
-                    </AlertDialog.Action>
-                  </Flex>
-                </AlertDialog.Content>
-              </AlertDialog.Root>
-            </Table.Cell>
-          </Table.Row>
+                    <Flex gap="3" mt="4" justify="end">
+                      <AlertDialog.Cancel>
+                        <Button variant="soft" color="gray">
+                          Cancel
+                        </Button>
+                      </AlertDialog.Cancel>
+                      <AlertDialog.Action>
+                        <Button
+                          onClick={() =>
+                            handleClickRemoveItemFromCart(item.product)
+                          }
+                          variant="solid"
+                          color="red"
+                        >
+                          Revoke from cart
+                        </Button>
+                      </AlertDialog.Action>
+                    </Flex>
+                  </AlertDialog.Content>
+                </AlertDialog.Root>
+              </Table.Cell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table.Root>
       <Flex
