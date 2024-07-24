@@ -1,4 +1,4 @@
-# E-Commerce Application
+# Fliki Shop
 
 This is a full-featured e-commerce application built with React, Radix UI, Jotai, Node.js, TypeScript, Express, and MongoDB. The application supports the following features:
 
