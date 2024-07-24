@@ -4,6 +4,7 @@
     "experimentalDecorators": true,
     "target": "ES6",
     "module": "CommonJS",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "dist"
   }
 }
