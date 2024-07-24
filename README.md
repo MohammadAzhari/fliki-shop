@@ -59,6 +59,7 @@ Navigate to the `backend` directory, install dependencies, and start the develop
 ```bash
 cd backend
 npm install
+npm run seed
 npm run dev
 ```
 
