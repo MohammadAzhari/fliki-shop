@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import cartAtom from "../atoms/cartAtom";
+import { cartAtom } from "../atoms/cartAtom";
 import { IProduct } from "../../models/Product";
 
 const addItemToCart = atom(null, (get, set, data: { product: IProduct }) => {

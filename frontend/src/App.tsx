@@ -1,6 +1,6 @@
 import { Theme } from "@radix-ui/themes";
 import AppRoutes from "./routes";
-import themeAtom from "./state/atoms/themeAtom";
+import { themeAtom } from "./state/atoms/themeAtom";
 import { useAtomValue } from "jotai";
 
 function App() {

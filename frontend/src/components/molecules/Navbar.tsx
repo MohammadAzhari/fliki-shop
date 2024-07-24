@@ -1,7 +1,7 @@
 import { BackpackIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { Avatar, Box, Flex, IconButton } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
-import themeAtom from "../../state/atoms/themeAtom";
+import { themeAtom } from "../../state/atoms/themeAtom";
 import { useAtom, useAtomValue } from "jotai";
 import themeActions from "../../state/actions/themeActions";
 import { cartItemsCountAtom } from "../../state/atoms/cartAtom";

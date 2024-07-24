@@ -10,9 +10,6 @@ const ProductList = () => {
     return <ErrorCallout message={error} />;
   }
 
-  if (isLoading) {
-  }
-
   return (
     <Box>
       <Flex gap="3" m="5" wrap="wrap" align="center" justify="center">
