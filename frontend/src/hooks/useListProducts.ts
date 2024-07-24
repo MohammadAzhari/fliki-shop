@@ -4,7 +4,7 @@ import productApi from "../api/productApi";
 
 const useListProducts = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<IProduct[]>([]);
