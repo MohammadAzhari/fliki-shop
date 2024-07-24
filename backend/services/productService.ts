@@ -5,7 +5,7 @@ interface PaginationParams {
   limit: number;
 }
 
-export const listProducts = async ({
+const listProducts = async ({
   page = 1,
   limit = 10,
 }: PaginationParams): Promise<{ products: IProduct[]; total: number }> => {
@@ -17,4 +17,17 @@ export const listProducts = async ({
   } catch (error: any) {
     throw new Error(`Error listing products: ${error.message}`);
   }
+};
+
+const getProduct = async (productId: string): Promise<IProduct | null> => {
+  try {
+    return Product.findById(productId);
+  } catch (error: any) {
+    throw new Error(`Error getting product: ${error.message}`);
+  }
+};
+
+export default {
+  getProduct,
+  listProducts,
 };

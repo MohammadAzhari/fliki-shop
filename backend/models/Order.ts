@@ -12,6 +12,14 @@ export interface IOrder extends Document {
   updatedAt: Date;
 }
 
+export interface ICreateOrder {
+  products: {
+    product: IProduct["_id"];
+    quantity: number;
+  }[];
+  totalAmount: number;
+}
+
 // Define the Order schema
 const OrderSchema: Schema = new Schema(
   {

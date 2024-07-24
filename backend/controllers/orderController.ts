@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { createOrder } from "../services/orderService";
+import orderService from "../services/orderService";
 import Joi from "joi";
+import { ICreateOrder } from "../models/Order";
 
-const orderSchema = Joi.object({
+const orderSchema = Joi.object<ICreateOrder>({
   products: Joi.array()
     .items(
       Joi.object({
@@ -15,8 +16,8 @@ const orderSchema = Joi.object({
   totalAmount: Joi.number().positive().required(),
 });
 
-export const addOrder = async (
-  req: Request,
+const ceateOrder = async (
+  req: Request<any, any, ICreateOrder>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -30,9 +31,13 @@ export const addOrder = async (
     }
 
     // Proceed with creating the order
-    const order = await createOrder(req.body);
+    const order = await orderService.createOrder(req.body);
     res.status(201).json(order);
   } catch (error) {
     next(error);
   }
+};
+
+export default {
+  ceateOrder,
 };

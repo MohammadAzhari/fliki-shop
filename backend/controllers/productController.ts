@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { listProducts } from "../services/productService";
+import productService from "../services/productService";
 
-export const getProducts = async (
+const listProducts = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -10,7 +10,10 @@ export const getProducts = async (
     const page = parseInt(req.query.page as string, 10) || 1;
     const limit = parseInt(req.query.limit as string, 10) || 10;
 
-    const { products, total } = await listProducts({ page, limit });
+    const { products, total } = await productService.listProducts({
+      page,
+      limit,
+    });
 
     res.status(200).json({
       products,
@@ -25,13 +28,21 @@ export const getProducts = async (
   }
 };
 
-export const getProduct = async (
+const getProduct = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
+    const productId = req.params.id;
+    const product = await productService.getProduct(productId);
+    res.status(200).json(product);
   } catch (error) {
     next(error);
   }
+};
+
+export default {
+  getProduct,
+  listProducts,
 };

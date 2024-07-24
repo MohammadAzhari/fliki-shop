@@ -1,10 +1,13 @@
-import Order, { IOrder } from "../models/Order";
+import Order, { ICreateOrder, IOrder } from "../models/Order";
 
-export const createOrder = async (orderData: any): Promise<IOrder> => {
+const createOrder = async (orderData: ICreateOrder): Promise<IOrder> => {
   try {
-    const order = new Order(orderData);
-    return await order.save();
+    return Order.create(orderData);
   } catch (error) {
     throw new Error(`Error creating order: ${error.message}`);
   }
+};
+
+export default {
+  createOrder,
 };
